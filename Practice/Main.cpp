@@ -7,10 +7,11 @@
 #include "Gauss.h"
 #include "LUP.h"
 #include "Cholesky.h"
+#include "Relaxation.h"
 
 using namespace std;
 
-void test(const std::function<Vector(Matrix, Vector)> solver, Matrix m, Vector b, Vector answer)
+void test(const std::function<Vector(Matrix, Vector)>& solver, Matrix m, Vector b, Vector answer)
 {
 	auto c = solver(m, b);
 	for (auto x : c)
@@ -44,9 +45,12 @@ int main()
 	);
 	Vector b = { -2, -2, -2 };
 
+	SolveRelaxation(full, b, 0.000001, 1.2);
 	auto [LT, D] = BuildCholesky(full);
 	auto [LU, P] = BuildLUP(full);
-	auto x = SolveCholesky(LT, D, b);
+	auto x = 
+		Utils::SubVectors(SolveRelaxation(full, b, 0.000001, 1.2),
+			SolveCholesky(LT, D, b));
 	SolveLUP(LU, P, b);
 	Vector answer = {1, 0, -1};
 	test(SolveGauss, full, b, answer);

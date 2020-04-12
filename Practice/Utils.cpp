@@ -17,6 +17,36 @@ double Utils::CubicNorm(const Matrix& m)
 	return norm;
 }
 
+double Utils::EuclideanNorm(const Vector& v)
+{
+	return sqrt(ScalarMultiply(v, v));
+}
+
+
+
+double Utils::ScalarMultiply(const Vector& l, const Vector& r)
+{
+	double sum = 0;
+	for (int i = 0; i < l.size(); i++)
+	{
+		sum += l[i] * r[i];
+	}
+	return sum;
+}
+
+Vector Utils::SubVectors(const Vector& l, const Vector& r)
+{
+	const int n = l.size();
+	
+	Vector x(n);
+	for (int i = 0; i < n; ++i)
+	{
+		x[i] = l[i] - r[i];
+	}
+
+	return x;
+}
+
 Vector Utils::SolveUpperTriangle(const Matrix& m, const Vector& b)
 {
 	const int n = b.size();
@@ -39,6 +69,7 @@ Vector Utils::SolveLowerTriangle(const Matrix& m, const Vector& b)
 {
 	const int n = b.size();
 	Vector x(b.size());
+	
 	for (int i = 0; i < n; ++i)
 	{
 		double sum = 0;

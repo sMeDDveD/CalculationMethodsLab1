@@ -125,6 +125,7 @@
     <ClInclude Include="Gauss.h" />
     <ClInclude Include="LUP.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="Relaxation.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -134,6 +135,7 @@
     <ClCompile Include="LUP.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="Relaxation.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

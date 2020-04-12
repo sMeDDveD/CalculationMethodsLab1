@@ -30,9 +30,7 @@ std::pair<Matrix, Vector> BuildCholesky(Matrix m)
 			m.AddMultipliedRowPart(j, i, l, j, n);
 		}
 	}
-
-	std::cout << m;
-
+	
 	return { m, D };
 }
 
