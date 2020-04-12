@@ -144,7 +144,12 @@ void Matrix::AddMultipliedRowPart(int to, int from, double lambda, int start, in
 
 void Matrix::MultiplyRow(int row, double lambda)
 {
-	for (int j = 0; j < cols; ++j)
+	MultiplyRowPart(row, lambda, 0, cols);
+}
+
+void Matrix::MultiplyRowPart(int row, double lambda, int start, int end)
+{
+	for (int j = start; j < end; ++j)
 	{
 		this->operator()(row, j) *= lambda;
 	}

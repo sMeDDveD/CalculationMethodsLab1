@@ -46,7 +46,9 @@ public:
 
 	void AddMultipliedRow(int to, int from, double lambda);
 	void AddMultipliedRowPart(int to, int from, double lambda, int start, int end);
+	
 	void MultiplyRow(int row, double lambda);
+	void MultiplyRowPart(int row, double lambda, int start, int end);
 
 	static Matrix GetEmpty(int n, int m);
 	static Matrix GetEye(int n);

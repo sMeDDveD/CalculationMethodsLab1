@@ -120,6 +120,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Cholesky.h" />
     <ClInclude Include="ConditionNumber.h" />
     <ClInclude Include="Gauss.h" />
     <ClInclude Include="LUP.h" />
@@ -127,6 +128,7 @@
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Cholesky.cpp" />
     <ClCompile Include="ConditionNumber.cpp" />
     <ClCompile Include="Gauss.cpp" />
     <ClCompile Include="LUP.cpp" />

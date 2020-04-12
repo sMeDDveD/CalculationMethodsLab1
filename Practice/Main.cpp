@@ -6,6 +6,7 @@
 #include "Utils.h"
 #include "Gauss.h"
 #include "LUP.h"
+#include "Cholesky.h"
 
 using namespace std;
 
@@ -31,7 +32,7 @@ int main()
 {
 	double upper[] = {1, 2, 3, 0, 1, -6, 0, 0, -48};
 	double lower[] = { 3, 0, 0, 1, 1, 0, 1, 2, 3 };
-	double arr[] = {1, 2, 3, 4, 9, 6, 7, 8, 9};
+	double arr[] = {10, 1, 2, 1, 6, 3, 2, 3, 7};//{1, 2, 3, 4, 9, 6, 7, 8, 9};
 	Matrix lowerTriagonal = Matrix::FromArray(
 		lower, 3, 3
 	);
@@ -43,7 +44,9 @@ int main()
 	);
 	Vector b = { -2, -2, -2 };
 
-	auto [LU, P] =BuildLUP(full);
+	auto [LT, D] = BuildCholesky(full);
+	auto [LU, P] = BuildLUP(full);
+	auto x = SolveCholesky(LT, D, b);
 	SolveLUP(LU, P, b);
 	Vector answer = {1, 0, -1};
 	test(SolveGauss, full, b, answer);

@@ -9,6 +9,15 @@ P::P(int n)
 	std::iota(rows.begin(), rows.end(), 0);
 }
 
+static Matrix SetOnes(Matrix m)
+{
+	for (int i = 0; i < m.GetCols(); ++i)
+	{
+		m(i, i) = 1;
+	}
+	return m;
+}
+
 std::pair<Matrix, P> BuildLUP(Matrix m)
 {
 	const int n = m.GetCols();
@@ -33,17 +42,9 @@ std::pair<Matrix, P> BuildLUP(Matrix m)
 	return { m, p };
 }
 
-static Matrix SetOnes(Matrix m)
-{
-	for (int i = 0; i < m.GetCols(); ++i)
-	{
-		m(i, i) = 1;
-	}
-	return m;
-}
-
 Vector SolveLUP(Matrix LU, P p, Vector b)
 {
+	
 	const int n = b.size();
 	Vector bP(n);
 	
