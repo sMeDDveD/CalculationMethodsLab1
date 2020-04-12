@@ -121,11 +121,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ConditionNumber.h" />
+    <ClInclude Include="Gauss.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConditionNumber.cpp" />
+    <ClCompile Include="Gauss.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Utils.cpp" />

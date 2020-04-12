@@ -1,9 +1,12 @@
 #pragma once
 #include <exception>
 #include <string>
+#include <vector>
 #include <algorithm>
 #include <iterator>
 #include <cmath>
+
+using Vector = std::vector<double>;
 
 class Matrix final
 {
@@ -11,7 +14,9 @@ class Matrix final
 	int rows, cols;
 
 public:
+	const static int precision = 3;
 	const static size_t variant = 9;
+	
 	static Matrix FromArray(double* data, int rows, int cols);
 	
 	explicit Matrix(int rows, int cols);
@@ -28,7 +33,7 @@ public:
 	Matrix(const Matrix& other);
 
 	Matrix& operator=(Matrix&& other) noexcept = default;
-	double* GetData() const;
+	[[nodiscard]] double* GetData() const;
 	double operator() (int i, int j) const;
 	double& operator() (int i, int j);
 

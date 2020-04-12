@@ -14,3 +14,21 @@ double Utils::CubicNorm(const Matrix& m)
 	}
 	return norm;
 }
+
+Vector Utils::SolveTriangle(const Matrix& m, const Vector& b)
+{
+	const int n = b.size();
+	Vector x(b.size());
+
+	for (int i = n - 1; i >= 0; i--)
+	{
+		double sum = 0;
+		for(int j = i + 1; j < n; j++)
+		{
+			sum += x[j] * m(i, j);
+		}
+		x[i] = (b[i] - sum) / m(i, i);
+	}
+
+	return x;
+}
