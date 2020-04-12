@@ -5,10 +5,11 @@
 #include "Matrix.h"
 #include "Utils.h"
 #include "Gauss.h"
+#include "LUP.h"
 
 using namespace std;
 
-void test(std::function<Vector(Matrix, Vector)> solver, Matrix m, Vector b, Vector answer)
+void test(const std::function<Vector(Matrix, Vector)> solver, Matrix m, Vector b, Vector answer)
 {
 	auto c = solver(m, b);
 	for (auto x : c)
@@ -28,17 +29,25 @@ void test(std::function<Vector(Matrix, Vector)> solver, Matrix m, Vector b, Vect
 
 int main()
 {
-	double triag[] = { 1, 2, 3, 0, 1, -6, 0, 0, -48 };
-	double arr[] = { 1, 2, 3, 4, 9, 6, 7, 8, 9 };
+	double upper[] = {1, 2, 3, 0, 1, -6, 0, 0, -48};
+	double lower[] = { 3, 0, 0, 1, 1, 0, 1, 2, 3 };
+	double arr[] = {1, 2, 3, 4, 9, 6, 7, 8, 9};
+	Matrix lowerTriagonal = Matrix::FromArray(
+		lower, 3, 3
+	);
 	Matrix upperTriagonal = Matrix::FromArray(
-		triag, 3, 3
+		upper, 3, 3
 	);
 	Matrix full = Matrix::FromArray(
 		arr, 3, 3
 	);
 	Vector b = { -2, -2, -2 };
-	Vector answer = { 1, 0, -1 };
+
+	auto [LU, P] =BuildLUP(full);
+	SolveLUP(LU, P, b);
+	Vector answer = {1, 0, -1};
 	test(SolveGauss, full, b, answer);
+	test(Utils::SolveLowerTriangle, lowerTriagonal, { 3, 1, -2 }, answer);
 	system("pause");
 	return 0;
 }

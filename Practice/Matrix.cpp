@@ -7,7 +7,7 @@ Matrix Matrix::FromArray(double* data, int rows, int cols)
 {
 	Matrix matrix(rows, cols);
 	std::copy(data, data + rows * cols, matrix.data);
-	
+
 	return matrix;
 }
 
@@ -16,7 +16,9 @@ Matrix::Matrix(int rows, int cols): rows(rows), cols(cols)
 	data = new double[rows * cols];
 }
 
-Matrix::Matrix(int n): Matrix(n, n) {}
+Matrix::Matrix(int n): Matrix(n, n)
+{
+}
 
 int Matrix::GetRows() const
 {
@@ -39,13 +41,13 @@ Matrix& Matrix::operator=(const Matrix& other)
 {
 	if (this == &other)
 		return *this;
-	
+
 	rows = other.rows;
 	cols = other.cols;
-	
+
 	data = new double[rows * cols];
 	std::copy(other.data, other.data + rows * cols, data);
-	
+
 	return *this;
 }
 
@@ -59,7 +61,7 @@ double* Matrix::GetData() const
 {
 	double* copy = new double[rows * cols];
 	std::copy(data, data + rows * cols, copy);
-	
+
 	return copy;
 }
 
@@ -101,7 +103,7 @@ Matrix Matrix::operator+(const Matrix& other) const
 	{
 		throw std::exception("Unsupported sizes");
 	}
-	
+
 	double* aData = new double[rows * cols];
 	for (int i = 0; i < rows * cols; ++i)
 	{
@@ -129,7 +131,12 @@ void Matrix::SwapColumns(int fCol, int sCol)
 
 void Matrix::AddMultipliedRow(int to, int from, double lambda)
 {
-	for (int j = 0; j < cols; ++j)
+	AddMultipliedRowPart(to, from, lambda, 0, cols);
+}
+
+void Matrix::AddMultipliedRowPart(int to, int from, double lambda, int start, int end)
+{
+	for (int j = start; j < end; ++j)
 	{
 		this->operator()(to, j) += lambda * this->operator()(from, j);
 	}
@@ -207,7 +214,7 @@ std::ostream& operator<<(std::ostream& out, const Matrix& matrix)
 	{
 		for (int j = 0; j < matrix.cols; j++)
 		{
-			out <<std::setw(8) << matrix(i, j) << ' ';
+			out << std::setw(8) << matrix(i, j) << ' ';
 		}
 		out << std::endl;
 	}

@@ -5,5 +5,9 @@ namespace Utils
 {
 	double CubicNorm(const Matrix& m);
 
-	Vector SolveTriangle(const Matrix& m, const Vector& b);
+	Vector SolveUpperTriangle(const Matrix& m, const Vector& b);
+
+	Vector SolveLowerTriangle(const Matrix& m, const Vector& b);
+
+	std::pair<int, int> FindMax(const Matrix& m, int start);
 }

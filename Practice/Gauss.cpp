@@ -14,7 +14,7 @@ Vector SolveGauss(Matrix m, Vector b)
 	for (int k = 0; k < n - 1; ++k)
 	{
 		// Getting max element
-		auto [col, row] = FindMax(m, k + 1);
+		auto [col, row] = Utils::FindMax(m, k + 1);
 
 		m.SwapColumns(k, col);
 		m.SwapRows(k, row);
@@ -31,7 +31,7 @@ Vector SolveGauss(Matrix m, Vector b)
 		}
 	}
 
-	auto shuffledAnswer = Utils::SolveTriangle(m, b);
+	auto shuffledAnswer = Utils::SolveUpperTriangle(m, b);
 	Vector answer(n);
 
 	for (int i = 0; i < n; i++)
@@ -41,25 +41,4 @@ Vector SolveGauss(Matrix m, Vector b)
 	}
 
 	return answer;
-}
-
-std::pair<int, int> FindMax(const Matrix& m, int start)
-{
-	const int n = m.GetCols();
-	double max = m(start, start);
-	std::pair<int, int> indexes = {start, start};
-
-	for (int i = start; i < n; ++i)
-	{
-		for (int j = start; j < n; ++j)
-		{
-			const double curr = m(i, j);
-			if (curr > max)
-			{
-				max = curr;
-				indexes = {i, j};
-			}
-		}
-	}
-	return indexes;
 }
