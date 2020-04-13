@@ -13,7 +13,6 @@ Vector SolveLeastSquares(Matrix m, Vector b)
 void GaussTransform(Matrix& m, Vector& b)
 {
 	Matrix T = m.Transpose();
-	std::cout << T;
 	m = T * m;
 	b = T * b;
 }

@@ -31,7 +31,6 @@ std::pair<Matrix, Vector> BuildCholesky(Matrix m)
 		m.MultiplyRowPart(i, lsqrt, i, n);
 	}
 
-	std::cout << m;
 	return { m, D };
 }
 

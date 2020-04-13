@@ -11,6 +11,8 @@
 #include "Householder.h"
 #include "LeastSquares.h"
 
+constexpr double EPS = 0.00000001;
+
 void tests(const Matrix A, const Vector b, const Vector x)
 {
 	std::cout << "Gauss: " << std::endl;
@@ -25,6 +27,18 @@ void tests(const Matrix A, const Vector b, const Vector x)
 	std::cout << "Cholesky:" << std::endl;
 	auto[LT, D] = BuildCholesky(A);
 	std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveCholesky(LT, D, b)));
+	std::cout << std::endl;
+
+	std::cout << "Relaxation:" << std::endl;
+	std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveRelaxation(A, b, EPS, 1.2)));
+	std::cout << std::endl;
+
+	std::cout << "Householder:" << std::endl;
+	std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveHouseholder(A, b)));
+	std::cout << std::endl;
+
+	std::cout << "LeastSquares:" << std::endl;
+	std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveLeastSquares(A, b)));
 	std::cout << std::endl;
 }
 

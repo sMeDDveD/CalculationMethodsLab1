@@ -1,7 +1,5 @@
 #include "Householder.h"
 
-#include <iostream>
-
 
 static Vector GetW(Vector a)
 {
@@ -50,8 +48,6 @@ static void ApplyToMatrix(Matrix& m, Vector& b, const Vector& w)
 	{
 		b[i + offset] -= 2 * scalar * w[i];
 	}
-
-	std::cout << m;
 }
 
 Vector SolveHouseholder(Matrix m, Vector b)
