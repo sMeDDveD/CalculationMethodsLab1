@@ -1,7 +1,6 @@
 #include "Matrix.h"
 
-#include <iomanip>
-#include <random>
+
 
 #include "Utils.h"
 
@@ -102,7 +101,7 @@ Matrix::Matrix(const Matrix& other): rows(other.rows),
 
 double* Matrix::GetData() const
 {
-	double* copy = new double[rows * cols];
+	auto* copy = new double[rows * cols];
 	std::copy(data, data + rows * cols, copy);
 
 	return copy;
@@ -111,7 +110,7 @@ double* Matrix::GetData() const
 double& Matrix::operator()(int i, int j)
 {
 	if (i >= rows || j >= cols)
-		throw std::exception("Matrix subscript out of bounds");
+		throw std::runtime_error("Matrix subscript out of bounds");
 	return data[i * cols + j];
 }
 
@@ -121,7 +120,7 @@ Matrix Matrix::operator*(const Matrix& other) const
 
 	if (cols != other.rows)
 	{
-		throw std::exception("Unsupported sizes");
+		throw std::runtime_error("Unsupported sizes");
 	}
 
 	for (int i = 0; i < rows; ++i)
@@ -146,7 +145,7 @@ Vector Matrix::operator*(const Vector& other) const
 
 	if (other.size() != cols)
 	{
-		throw std::exception("Unsupported sizes");
+		throw std::runtime_error("Unsupported sizes");
 	}
 
 	for (int i = 0; i < rows; ++i)
@@ -161,10 +160,10 @@ Matrix Matrix::operator+(const Matrix& other) const
 {
 	if (other.cols != cols || other.rows != rows)
 	{
-		throw std::exception("Unsupported sizes");
+		throw std::runtime_error("Unsupported sizes");
 	}
 
-	double* aData = new double[rows * cols];
+	auto* aData = new double[rows * cols];
 	for (int i = 0; i < rows * cols; ++i)
 	{
 		aData[i] = data[i] + other.data[i];
@@ -250,7 +249,7 @@ Matrix Matrix::GenerateMatrix(int n, int param)
 	Matrix m(n, n);
 
 	std::random_device device;
-	const std::uniform_real_distribution<double> distr(
+	std::uniform_real_distribution<double> distr(
 		-pow(2, static_cast<double>(param) / 4),
 		pow(2, static_cast<double>(param) / 4)
 	);
@@ -267,7 +266,7 @@ Matrix Matrix::GenerateMatrix(int n, int param)
 		m(i, i) = 0;
 		for (int j = 0; j < n; j++)
 		{
-			d += abs(m(i, j));
+			d += std::abs(m(i, j));
 		}
 		m(i, i) = d;
 	}
@@ -278,7 +277,7 @@ Matrix Matrix::GenerateMatrix(int n, int param)
 double Matrix::operator()(int i, int j) const
 {
 	if (i >= rows || j >= cols)
-		throw std::exception("Matrix subscript out of bounds");
+		throw std::runtime_error("Matrix subscript out of bounds");
 	return data[i * cols + j];
 }
 

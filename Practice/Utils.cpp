@@ -8,7 +8,7 @@ double Utils::CubicNorm(const Matrix& m)
 		double sum = 0;
 		for (int j = 0; j < m.GetCols(); ++j)
 		{
-			sum += abs(m(i, j));
+			sum += std::abs(m(i, j));
 		}
 		norm = std::max(norm, sum);
 	}
@@ -84,14 +84,14 @@ Vector Utils::SolveLowerTriangle(const Matrix& m, const Vector& b)
 std::pair<int, int> Utils::FindMax(const Matrix& m, int start)
 {
 	const int n = m.GetCols();
-	double max = abs(m(start, start));
+	double max = std::abs(m(start, start));
 	std::pair<int, int> indexes = { start, start };
 
 	for (int i = start; i < n; ++i)
 	{
 		for (int j = start; j < n; ++j)
 		{
-			const double curr = abs(m(i, j));
+			const double curr = std::abs(m(i, j));
 			if (curr > max)
 			{
 				max = curr;

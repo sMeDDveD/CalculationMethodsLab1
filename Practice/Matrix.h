@@ -1,10 +1,13 @@
 #pragma once
+
 #include <exception>
 #include <string>
 #include <vector>
 #include <algorithm>
 #include <iterator>
 #include <cmath>
+#include <iomanip>
+#include <random>
 
 using Vector = std::vector<double>;
 

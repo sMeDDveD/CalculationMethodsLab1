@@ -58,6 +58,5 @@ int main()
 	SolveLUP(LU, P, b);
 	Vector answer = {1, 0, -1};
 	test(SolveGauss, full, b, answer);
-	system("pause");
 	return 0;
 }
