@@ -24,7 +24,7 @@ static void ApplyToMatrix(Matrix& m, Vector& b, const Vector& w)
 	const int n = m.GetCols();
 	const int vectorSize = w.size();
 	const int offset = n - vectorSize;
-	double scalar = 0;
+	double scalar;
 	
 	for (int j = 0; j < n; ++j)
 	{

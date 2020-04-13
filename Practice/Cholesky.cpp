@@ -1,7 +1,5 @@
 #include "Cholesky.h"
 
-#include <iostream>
-
 
 std::pair<Matrix, Vector> BuildCholesky(Matrix m)
 {
@@ -34,7 +32,7 @@ std::pair<Matrix, Vector> BuildCholesky(Matrix m)
 	return { m, D };
 }
 
-Vector SolveCholesky(Matrix LT, Vector D, Vector b)
+Vector SolveCholesky(const Matrix& LT, const Vector& D, const Vector& b)
 {
 	const int n = D.size();
 

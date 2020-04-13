@@ -8,4 +8,4 @@
 
 std::pair<Matrix, Vector> BuildCholesky(Matrix m);
 
-Vector SolveCholesky(Matrix LT, Vector D, Vector b);
+Vector SolveCholesky(const Matrix& LT, const Vector& D, const Vector& b);

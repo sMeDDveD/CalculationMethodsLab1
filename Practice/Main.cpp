@@ -9,6 +9,7 @@
 #include "Cholesky.h"
 #include "Relaxation.h"
 #include "Householder.h"
+#include "LeastSquares.h"
 
 using namespace std;
 
@@ -52,12 +53,11 @@ int main()
 	auto [LT, D] = BuildCholesky(full);
 	auto [LU, P] = BuildLUP(full);
 	auto x = 
-		Utils::SubVectors(SolveRelaxation(full, b, 0.000001, 1.2),
+		Utils::SubVectors(SolveLeastSquares(full, b),
 			SolveCholesky(LT, D, b));
 	SolveLUP(LU, P, b);
 	Vector answer = {1, 0, -1};
 	test(SolveGauss, full, b, answer);
-	test(Utils::SolveLowerTriangle, lowerTriagonal, { 3, 1, -2 }, answer);
 	system("pause");
 	return 0;
 }

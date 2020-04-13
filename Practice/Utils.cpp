@@ -1,7 +1,5 @@
 #include "Utils.h"
 
-#include <iostream>
-
 double Utils::CubicNorm(const Matrix& m)
 {
 	double norm = 0;
@@ -27,7 +25,7 @@ double Utils::EuclideanNorm(const Vector& v)
 double Utils::ScalarMultiply(const Vector& l, const Vector& r)
 {
 	double sum = 0;
-	for (int i = 0; i < l.size(); i++)
+	for (int i = 0; i < l.size(); ++i)
 	{
 		sum += l[i] * r[i];
 	}

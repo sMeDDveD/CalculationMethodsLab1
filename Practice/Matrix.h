@@ -32,17 +32,19 @@ public:
 	Vector GetColPart(int col, int start, int end) const;
 
 	Matrix(Matrix&& other) noexcept;
+	Matrix& operator=(Matrix&& other) noexcept;
 
 	Matrix& operator=(const Matrix& other);
 
 	Matrix(const Matrix& other);
 
-	Matrix& operator=(Matrix&& other) noexcept = default;
 	[[nodiscard]] double* GetData() const;
 	double operator()(int i, int j) const;
 	double& operator()(int i, int j);
 
 	Matrix operator*(const Matrix& other) const;
+	Vector operator*(const Vector& other) const;
+	
 	Matrix operator+(const Matrix& other) const;
 
 	Matrix GetSubMatrix(int i, int j) const;
@@ -54,6 +56,8 @@ public:
 	
 	void MultiplyRow(int row, double lambda);
 	void MultiplyRowPart(int row, double lambda, int start, int end);
+
+	Matrix Transpose() const;
 
 	static Matrix GetEmpty(int n, int m);
 	static Matrix GetEye(int n);

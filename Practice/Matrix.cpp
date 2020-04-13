@@ -3,6 +3,8 @@
 #include <iomanip>
 #include <random>
 
+#include "Utils.h"
+
 Matrix Matrix::FromArray(double* data, int rows, int cols)
 {
 	Matrix matrix(rows, cols);
@@ -37,7 +39,7 @@ Vector Matrix::GetRow(int row) const
 
 Vector Matrix::GetRowPart(int row, int start, int end) const
 {
-	return Vector(data + row + start, data + row + end);
+	return Vector(data + row * cols + start, data + row * cols + end);
 }
 
 Vector Matrix::GetCol(int col) const
@@ -56,11 +58,25 @@ Vector Matrix::GetColPart(int col, int start, int end) const
 	return column;
 }
 
+
+
 Matrix::Matrix(Matrix&& other) noexcept
 {
 	rows = other.rows;
 	cols = other.cols;
 	std::swap(data, other.data);
+}
+
+Matrix& Matrix::operator=(Matrix&& other) noexcept
+{
+	if (this == &other)
+		return *this;
+
+	rows = other.rows;
+	cols = other.cols;
+	std::swap(data, other.data);
+
+	return *this;
 }
 
 Matrix& Matrix::operator=(const Matrix& other)
@@ -82,6 +98,7 @@ Matrix::Matrix(const Matrix& other): rows(other.rows),
 {
 	this->operator=(other);
 }
+
 
 double* Matrix::GetData() const
 {
@@ -109,10 +126,10 @@ Matrix Matrix::operator*(const Matrix& other) const
 
 	for (int i = 0; i < rows; ++i)
 	{
-		for (int j = 0; j < other.cols; j++)
+		for (int j = 0; j < other.cols; ++j)
 		{
 			double ij = 0;
-			for (int k = 0; k < cols; k++)
+			for (int k = 0; k < cols; ++k)
 			{
 				ij += this->operator()(i, k) * other(k, j);
 			}
@@ -120,6 +137,23 @@ Matrix Matrix::operator*(const Matrix& other) const
 		}
 	}
 
+	return product;
+}
+
+Vector Matrix::operator*(const Vector& other) const
+{
+	Vector product = Vector(other.size());
+
+	if (other.size() != cols)
+	{
+		throw std::exception("Unsupported sizes");
+	}
+
+	for (int i = 0; i < rows; ++i)
+	{
+		product[i] = Utils::ScalarMultiply(GetRow(i), other);
+	}
+	
 	return product;
 }
 
@@ -179,6 +213,21 @@ void Matrix::MultiplyRowPart(int row, double lambda, int start, int end)
 	{
 		this->operator()(row, j) *= lambda;
 	}
+}
+
+Matrix Matrix::Transpose() const
+{
+	int m = GetRows();
+	int n = GetCols();
+	Matrix T(n, m);
+	for (int i = 0; i < n; ++i)
+	{
+		for (int j = 0; j < m; j++)
+		{
+			T(i, j) = this->operator()(i, j);
+		}
+	}
+	return T;
 }
 
 Matrix Matrix::GetEmpty(int n, int m)
