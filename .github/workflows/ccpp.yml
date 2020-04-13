@@ -13,5 +13,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: pre
+      run: mkdir build && cd build
     - name: make
       run: cmake --build bin
+    - name: after
+      run: rm -rf build
