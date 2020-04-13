@@ -30,6 +30,32 @@ int Matrix::GetCols() const
 	return cols;
 }
 
+Vector Matrix::GetRow(int row) const
+{
+	return GetRowPart(row, 0, cols);
+}
+
+Vector Matrix::GetRowPart(int row, int start, int end) const
+{
+	return Vector(data + row + start, data + row + end);
+}
+
+Vector Matrix::GetCol(int col) const
+{
+	return GetColPart(col, 0, rows);
+}
+
+
+Vector Matrix::GetColPart(int col, int start, int end) const
+{
+	Vector column(end - start);
+	for (int i = start; i < end; ++i)
+	{
+		column[i - start] = this->operator()(i, col);
+	}
+	return column;
+}
+
 Matrix::Matrix(Matrix&& other) noexcept
 {
 	rows = other.rows;

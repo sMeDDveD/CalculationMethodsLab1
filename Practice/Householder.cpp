@@ -22,29 +22,33 @@ static Vector GetW(Vector a)
 static void ApplyToMatrix(Matrix& m, Vector& b, const Vector& w)
 {
 	const int n = m.GetCols();
+	const int vectorSize = w.size();
+	const int offset = n - vectorSize;
 	double scalar = 0;
 	
 	for (int j = 0; j < n; ++j)
 	{
-		for (int k = 0; k < n; ++k)
+		scalar = 0;
+		for (int k = 0; k < vectorSize; ++k)
 		{
-			scalar += m(k, j) * w[k];
+			scalar += m(k + offset, j) * w[k];
 		}
 
-		for (int i = 0; i < n; ++i)
+		for (int i = 0; i < vectorSize; ++i)
 		{
-			m(i, j) -= 2 * scalar * w[i];
+			m(i + offset, j) -= 2 * scalar * w[i];
 		}
 	}
-
-	for (int k = 0; k < n; ++k)
+	
+	scalar = 0;
+	for (int k = 0; k < vectorSize; ++k)
 	{
-		scalar += b[k] * w[k];
+		scalar += b[k + offset] * w[k];
 	}
 
-	for (int i = 0; i < n; ++i)
+	for (int i = 0; i < vectorSize; ++i)
 	{
-		b[i] -= 2 * scalar * w[i];
+		b[i + offset] -= 2 * scalar * w[i];
 	}
 
 	std::cout << m;
@@ -52,6 +56,10 @@ static void ApplyToMatrix(Matrix& m, Vector& b, const Vector& w)
 
 Vector SolveHouseholder(Matrix m, Vector b)
 {
+	const int n = m.GetCols();
+	for (int i = 0; i < n - 1; ++i) {
+		ApplyToMatrix(m, b, GetW(m.GetColPart(i, i, n)));
+	}
 	
-	return b;
+	return Utils::SolveUpperTriangle(m, b);
 }

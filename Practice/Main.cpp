@@ -8,6 +8,7 @@
 #include "LUP.h"
 #include "Cholesky.h"
 #include "Relaxation.h"
+#include "Householder.h"
 
 using namespace std;
 
@@ -45,6 +46,8 @@ int main()
 	);
 	Vector b = { -2, -2, -2 };
 
+
+	SolveHouseholder(full, b);
 	SolveRelaxation(full, b, 0.000001, 1.2);
 	auto [LT, D] = BuildCholesky(full);
 	auto [LU, P] = BuildLUP(full);
