@@ -16,6 +16,6 @@ jobs:
     - name: pre
       run: mkdir build
     - name: make
-      run: cmake --build build
+      run: cmake --build build -G "CodeBlocks - Unix Makefiles"
     - name: after
       run: rm -rf build
