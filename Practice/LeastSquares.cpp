@@ -7,8 +7,6 @@ Vector SolveLeastSquares(Matrix m, Vector b)
 	GaussTransform(m, b);
 	
 	auto [LT, D] = BuildCholesky(m);
-	std::cout << m;
-	std::cout << LT;
 	return SolveCholesky(LT, D, b);
 }
 

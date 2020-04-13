@@ -15,4 +15,4 @@ struct P
 
 std::pair<Matrix, P> BuildLUP(Matrix m);
 
-Vector SolveLUP(Matrix LU, P p, Vector b);
+Vector SolveLUP(const Matrix& LU, P p, const Vector& b);

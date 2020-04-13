@@ -11,52 +11,34 @@
 #include "Householder.h"
 #include "LeastSquares.h"
 
-using namespace std;
-
-void test(const std::function<Vector(Matrix, Vector)>& solver, Matrix m, Vector b, Vector answer)
+void tests(const Matrix A, const Vector b, const Vector x)
 {
-	auto c = solver(m, b);
-	for (auto x : c)
-	{
-		std::cout << x << " ";
-	}
+	std::cout << "Gauss: " << std::endl;
+	std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveGauss(A, b)));
+	std::cout << std::endl;
 
-	std::cout << endl;
+	std::cout << "LUP: " << std::endl;
+	auto[LU, P] = BuildLUP(A);
+	std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveLUP(LU, P, b)));
+	std::cout << std::endl;
 
-	for (int i = 0; i < answer.size(); i++)
-	{
-		std::cout << abs(c[i] - answer[i]) << " ";
-	}
-
-	std::cout << endl;
+	std::cout << "Cholesky:" << std::endl;
+	auto[LT, D] = BuildCholesky(A);
+	std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveCholesky(LT, D, b)));
+	std::cout << std::endl;
 }
+
 
 int main()
 {
-	double upper[] = {1, 2, 3, 0, 1, -6, 0, 0, -48};
-	double lower[] = { 3, 0, 0, 1, 1, 0, 1, 2, 3 };
-	double arr[] = {10, 1, 2, 1, 6, 3, 2, 3, 7};//{1, 2, 3, 4, 9, 6, 7, 8, 9};
-	Matrix lowerTriagonal = Matrix::FromArray(
-		lower, 3, 3
-	);
-	Matrix upperTriagonal = Matrix::FromArray(
-		upper, 3, 3
-	);
-	Matrix full = Matrix::FromArray(
+	double arr[] = {10, 1, 2, 1, 6, 3, 2, 3, 7};
+	Matrix A = Matrix::FromArray(
 		arr, 3, 3
 	);
-	Vector b = { -2, -2, -2 };
+	Vector x = { 1, 2 , 3 };
+	Vector b = A * x;
 
-
-	SolveHouseholder(full, b);
-	SolveRelaxation(full, b, 0.000001, 1.2);
-	auto [LT, D] = BuildCholesky(full);
-	auto [LU, P] = BuildLUP(full);
-	auto x = 
-		Utils::SubVectors(SolveLeastSquares(full, b),
-			SolveCholesky(LT, D, b));
-	SolveLUP(LU, P, b);
-	Vector answer = {1, 0, -1};
-	test(SolveGauss, full, b, answer);
+	tests(A, b, x);
+	system("pause");
 	return 0;
 }

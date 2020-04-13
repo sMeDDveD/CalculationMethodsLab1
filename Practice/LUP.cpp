@@ -1,5 +1,7 @@
 #include "LUP.h"
 
+#include <iostream>
+
 P::P(int n)
 {
 	cols.resize(n);
@@ -25,7 +27,7 @@ std::pair<Matrix, P> BuildLUP(Matrix m)
 
 	for (int k = 0; k < n - 1; ++k)
 	{
-		auto[col, row] = Utils::FindMax(m, k + 1);
+		auto[col, row] = Utils::FindMax(m, k);
 
 		m.SwapColumns(k, col);
 		m.SwapRows(k, row);
@@ -42,9 +44,8 @@ std::pair<Matrix, P> BuildLUP(Matrix m)
 	return { m, p };
 }
 
-Vector SolveLUP(Matrix LU, P p, Vector b)
+Vector SolveLUP(const Matrix& LU, P p, const Vector& b)
 {
-	
 	const int n = b.size();
 	Vector bP(n);
 	
@@ -53,7 +54,7 @@ Vector SolveLUP(Matrix LU, P p, Vector b)
 		bP[p.rows[i]] = b[i];
 	}
 	
-	const auto y = Utils::SolveLowerTriangle(SetOnes(LU), b);
+	const auto y = Utils::SolveLowerTriangle(SetOnes(LU), bP);
 	const auto shuffledX = Utils::SolveUpperTriangle(LU, y);
 
 	Vector x(n);

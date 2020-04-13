@@ -1,5 +1,7 @@
 #include "Cholesky.h"
 
+#include <iostream>
+
 
 std::pair<Matrix, Vector> BuildCholesky(Matrix m)
 {
@@ -21,14 +23,15 @@ std::pair<Matrix, Vector> BuildCholesky(Matrix m)
 			lsqrt = 1.0 / sqrt(-d);
 		}
 
-		m.MultiplyRowPart(i, lsqrt, i, n);
 		for (int j = i + 1; j < n; ++j)
 		{
-			const double l = -m(j, i) / m(i, i);
+			const double l = -m(i, j) / m(i, i);
 			m.AddMultipliedRowPart(j, i, l, j, n);
 		}
+		m.MultiplyRowPart(i, lsqrt, i, n);
 	}
-	
+
+	std::cout << m;
 	return { m, D };
 }
 
