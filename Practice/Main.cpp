@@ -20,31 +20,31 @@ void tests(const Matrix A, const Vector b, const Vector x)
     std::cout << GetConditionNumber(A);
     std::cout << std::endl;
 
-	std::cout << "Gauss: " << std::endl;
-	std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveGauss(A, b)));
-	std::cout << std::endl;
+    std::cout << "Gauss: " << std::endl;
+    std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveGauss(A, b)));
+    std::cout << std::endl;
 
-	std::cout << "LUP: " << std::endl;
-	auto[LU, P] = BuildLUP(A);
-	std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveLUP(LU, P, b)));
-	std::cout << std::endl;
+    std::cout << "LUP: " << std::endl;
+    auto [LU, P] = BuildLUP(A);
+    std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveLUP(LU, P, b)));
+    std::cout << std::endl;
 
-	std::cout << "Cholesky:" << std::endl;
-	auto[LT, D] = BuildCholesky(A);
-	std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveCholesky(LT, D, b)));
-	std::cout << std::endl;
+    std::cout << "Cholesky:" << std::endl;
+    auto [LT, D] = BuildCholesky(A);
+    std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveCholesky(LT, D, b)));
+    std::cout << std::endl;
 
-	std::cout << "Relaxation:" << std::endl;
-	std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveRelaxation(A, b, EPS, 1.2)));
-	std::cout << std::endl;
+    std::cout << "Relaxation:" << std::endl;
+    std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveRelaxation(A, b, EPS, 1.2)));
+    std::cout << std::endl;
 
-	std::cout << "Householder:" << std::endl;
-	std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveHouseholder(A, b)));
-	std::cout << std::endl;
+    std::cout << "Householder:" << std::endl;
+    std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveHouseholder(A, b)));
+    std::cout << std::endl;
 
-	std::cout << "LeastSquares:" << std::endl;
-	std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveLeastSquares(A, b)));
-	std::cout << std::endl;
+    std::cout << "LeastSquares:" << std::endl;
+    std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveLeastSquares(A, b)));
+    std::cout << std::endl;
 
     std::cout << "GMRES:" << std::endl;
     std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveGMRES(A, b, EPS)));
@@ -54,17 +54,17 @@ void tests(const Matrix A, const Vector b, const Vector x)
 
 int main()
 {
-	double arr[] = {
-	        10, 1, 2,
-	        1, 6, 3,
-	        2, 3, 7
-	};
-	Matrix A = Matrix::FromArray(
-		arr, 3, 3
-	);
-	Vector x = { 1, 2 , 3 };
-	Vector b = A * x;
-	
-	tests(A, b, x);
-	return 0;
+    double arr[] = {
+        10, 1, 2,
+        1, 6, 3,
+        2, 3, 7
+    };
+    Matrix A = Matrix::FromArray(
+        arr, 3, 3
+    );
+    Vector x = {1, 2, 3};
+    Vector b = A * x;
+
+    tests(A, b, x);
+    return 0;
 }

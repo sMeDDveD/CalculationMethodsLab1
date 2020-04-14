@@ -4,22 +4,23 @@
 
 namespace Utils
 {
-	template <typename T>
-	int sgn(T val) {
-		return (T(0) < val) - (val < T(0));
-	}
-	
-	double CubicNorm(const Matrix& m);
+    template <typename T>
+    int sgn(T val)
+    {
+        return (T(0) < val) - (val < T(0));
+    }
 
-	double EuclideanNorm(const Vector& v);
+    double CubicNorm(const Matrix& m);
 
-	double ScalarMultiply(const Vector& l, const Vector& r);
+    double EuclideanNorm(const Vector& v);
 
-	Vector SubVectors(const Vector& l, const Vector& r);
+    double ScalarMultiply(const Vector& l, const Vector& r);
 
-	Vector SolveUpperTriangle(const Matrix& m, const Vector& b);
+    Vector SubVectors(const Vector& l, const Vector& r);
 
-	Vector SolveLowerTriangle(const Matrix& m, const Vector& b);
+    Vector SolveUpperTriangle(const Matrix& m, const Vector& b);
 
-	std::pair<int, int> FindMax(const Matrix& m, int start);
+    Vector SolveLowerTriangle(const Matrix& m, const Vector& b);
+
+    std::pair<int, int> FindMax(const Matrix& m, int start);
 }

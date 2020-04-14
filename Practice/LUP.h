@@ -7,10 +7,10 @@
 
 struct P
 {
-	std::vector<int> cols;
-	std::vector<int> rows;
+    std::vector<int> cols;
+    std::vector<int> rows;
 
-	explicit P(int n);
+    explicit P(int n);
 };
 
 std::pair<Matrix, P> BuildLUP(Matrix m);

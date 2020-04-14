@@ -13,60 +13,60 @@ using Vector = std::vector<double>;
 
 class Matrix final
 {
-	double* data = nullptr;
-	int rows, cols;
+    double* data = nullptr;
+    int rows, cols;
 
 public:
-	const static int precision = 3;
-	const static size_t variant = 9;
+    const static int precision = 3;
+    const static size_t variant = 9;
 
-	static Matrix FromArray(double* data, int rows, int cols);
+    static Matrix FromArray(double* data, int rows, int cols);
 
-	explicit Matrix(int rows, int cols);
-	explicit Matrix(int n);
+    explicit Matrix(int rows, int cols);
+    explicit Matrix(int n);
 
 
-	int GetRows() const;
-	int GetCols() const;
-	
-	[[nodiscard]] Vector GetRow(int row) const;
-	Vector GetCol(int col) const;
-	Vector GetRowPart(int row, int start, int end) const;
-	Vector GetColPart(int col, int start, int end) const;
+    int GetRows() const;
+    int GetCols() const;
 
-	Matrix(Matrix&& other) noexcept;
-	Matrix& operator=(Matrix&& other) noexcept;
+    [[nodiscard]] Vector GetRow(int row) const;
+    Vector GetCol(int col) const;
+    Vector GetRowPart(int row, int start, int end) const;
+    Vector GetColPart(int col, int start, int end) const;
 
-	Matrix& operator=(const Matrix& other);
+    Matrix(Matrix&& other) noexcept;
+    Matrix& operator=(Matrix&& other) noexcept;
 
-	Matrix(const Matrix& other);
+    Matrix& operator=(const Matrix& other);
 
-	[[nodiscard]] double* GetData() const;
-	double operator()(int i, int j) const;
-	double& operator()(int i, int j);
+    Matrix(const Matrix& other);
 
-	Matrix operator*(const Matrix& other) const;
-	Vector operator*(const Vector& other) const;
-	
-	Matrix operator+(const Matrix& other) const;
+    [[nodiscard]] double* GetData() const;
+    double operator()(int i, int j) const;
+    double& operator()(int i, int j);
 
-	Matrix GetSubMatrix(int i, int j) const;
-	void SwapRows(int fRow, int sRow);
-	void SwapColumns(int fCol, int sCol);
+    Matrix operator*(const Matrix& other) const;
+    Vector operator*(const Vector& other) const;
 
-	void AddMultipliedRow(int to, int from, double lambda);
-	void AddMultipliedRowPart(int to, int from, double lambda, int start, int end);
-	
-	void MultiplyRow(int row, double lambda);
-	void MultiplyRowPart(int row, double lambda, int start, int end);
+    Matrix operator+(const Matrix& other) const;
 
-	Matrix Transpose() const;
+    Matrix GetSubMatrix(int i, int j) const;
+    void SwapRows(int fRow, int sRow);
+    void SwapColumns(int fCol, int sCol);
 
-	static Matrix GetEmpty(int n, int m);
-	static Matrix GetEye(int n);
-	static Matrix GenerateMatrix(int n, int param);
+    void AddMultipliedRow(int to, int from, double lambda);
+    void AddMultipliedRowPart(int to, int from, double lambda, int start, int end);
 
-	~Matrix();
+    void MultiplyRow(int row, double lambda);
+    void MultiplyRowPart(int row, double lambda, int start, int end);
 
-	friend std::ostream& operator<<(std::ostream& out, const Matrix& matrix);
+    Matrix Transpose() const;
+
+    static Matrix GetEmpty(int n, int m);
+    static Matrix GetEye(int n);
+    static Matrix GenerateMatrix(int n, int param);
+
+    ~Matrix();
+
+    friend std::ostream& operator<<(std::ostream& out, const Matrix& matrix);
 };
