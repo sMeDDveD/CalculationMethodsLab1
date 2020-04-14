@@ -29,7 +29,7 @@ public:
 	int GetRows() const;
 	int GetCols() const;
 	
-	Vector GetRow(int row) const;
+	[[nodiscard]] Vector GetRow(int row) const;
 	Vector GetCol(int col) const;
 	Vector GetRowPart(int row, int start, int end) const;
 	Vector GetColPart(int col, int start, int end) const;

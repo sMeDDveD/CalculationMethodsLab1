@@ -24,4 +24,4 @@ add_executable(CalculationMethods
         Practice/Relaxation.cpp
         Practice/Relaxation.h
         Practice/Utils.cpp
-        Practice/Utils.h)
+        Practice/Utils.h Practice/GMRES.h Practice/GMRES.cpp)

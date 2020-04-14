@@ -141,7 +141,7 @@ Matrix Matrix::operator*(const Matrix& other) const
 
 Vector Matrix::operator*(const Vector& other) const
 {
-	Vector product = Vector(other.size());
+	Vector product = Vector(rows);
 
 	if (other.size() != cols)
 	{
@@ -223,7 +223,7 @@ Matrix Matrix::Transpose() const
 	{
 		for (int j = 0; j < m; j++)
 		{
-			T(i, j) = this->operator()(i, j);
+			T(i, j) = this->operator()(j, i);
 		}
 	}
 	return T;
@@ -299,4 +299,14 @@ std::ostream& operator<<(std::ostream& out, const Matrix& matrix)
 	}
 
 	return out;
+}
+
+Matrix Matrix::GetSubMatrix(int i, int j) const
+{
+    Matrix m(i, j);
+    for (int row = 0; row < i; ++row) {
+        std::copy(data + row * cols, data + row * cols + j,
+                m.data + row * j);
+    }
+    return m;
 }
