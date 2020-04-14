@@ -123,6 +123,7 @@
     <ClInclude Include="Cholesky.h" />
     <ClInclude Include="ConditionNumber.h" />
     <ClInclude Include="Gauss.h" />
+    <ClInclude Include="GMRES.h" />
     <ClInclude Include="Householder.h" />
     <ClInclude Include="LeastSquares.h" />
     <ClInclude Include="LUP.h" />
@@ -134,6 +135,7 @@
     <ClCompile Include="Cholesky.cpp" />
     <ClCompile Include="ConditionNumber.cpp" />
     <ClCompile Include="Gauss.cpp" />
+    <ClCompile Include="GMRES.cpp" />
     <ClCompile Include="Householder.cpp" />
     <ClCompile Include="LeastSquares.cpp" />
     <ClCompile Include="LUP.cpp" />

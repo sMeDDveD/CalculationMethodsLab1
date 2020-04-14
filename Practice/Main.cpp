@@ -64,10 +64,7 @@ int main()
 	);
 	Vector x = { 1, 2 , 3 };
 	Vector b = A * x;
-
-	std::cout << A.GetSubMatrix(2, 2);
-
+	
 	tests(A, b, x);
-	system("pause");
 	return 0;
 }

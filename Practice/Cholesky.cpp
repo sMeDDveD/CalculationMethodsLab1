@@ -22,7 +22,7 @@ std::pair<Matrix, Vector> BuildCholesky(Matrix m)
 			D[i] = -1;
 			lsqrt = 1.0 / sqrt(-d);
 		}
-
+		
 		for (int j = i + 1; j < n; ++j)
 		{
 			const double l = -m(i, j) / m(i, i);
