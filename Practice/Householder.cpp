@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Householder.h"
 
 
@@ -22,7 +23,7 @@ static void ApplyToMatrix(Matrix& m, Vector& b, const Vector& w)
 {
     const int n = m.GetCols();
     const int vectorSize = w.size();
-    const int offset = n - vectorSize;
+    const int offset = m.GetRows() - vectorSize;
     double scalar;
 
     for (int j = 0; j < n; ++j)
@@ -54,10 +55,12 @@ static void ApplyToMatrix(Matrix& m, Vector& b, const Vector& w)
 Vector SolveHouseholder(Matrix m, Vector b)
 {
     const int n = m.GetCols();
+    const int l = m.GetRows();
     for (int i = 0; i < n - 1; ++i)
     {
-        ApplyToMatrix(m, b, GetW(m.GetColPart(i, i, n)));
+        ApplyToMatrix(m, b, GetW(m.GetColPart(i, i, l)));
     }
+
 
     return Utils::SolveUpperTriangle(m, b);
 }

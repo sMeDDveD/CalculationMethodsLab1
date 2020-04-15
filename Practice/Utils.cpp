@@ -46,8 +46,8 @@ Vector Utils::SubVectors(const Vector& l, const Vector& r)
 
 Vector Utils::SolveUpperTriangle(const Matrix& m, const Vector& b)
 {
-    const int n = b.size();
-    Vector x(b.size());
+    const int n = m.GetCols();
+    Vector x(n);
 
     for (int i = n - 1; i >= 0; --i)
     {
@@ -64,8 +64,8 @@ Vector Utils::SolveUpperTriangle(const Matrix& m, const Vector& b)
 
 Vector Utils::SolveLowerTriangle(const Matrix& m, const Vector& b)
 {
-    const int n = b.size();
-    Vector x(b.size());
+    const int n = m.GetCols();
+    Vector x(n);
 
     for (int i = 0; i < n; ++i)
     {

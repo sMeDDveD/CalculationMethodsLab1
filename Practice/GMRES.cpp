@@ -1,4 +1,3 @@
-#include <iostream>
 #include "GMRES.h"
 
 Vector SolveGMRES(Matrix m, Vector b, double epsilon)
@@ -11,8 +10,7 @@ Vector SolveGMRES(Matrix m, Vector b, double epsilon)
     for (int i = 0; i < n; ++i)
     {
         auto K = Stack(k);
-        x = K * SolveLeastSquares(m * K, b);
-        std::cout << x.size();
+        x = K * SolveLeastSquares(m * K, b, false);
         k.push_back(m * k.back());
         if (Utils::EuclideanNorm(Utils::SubVectors(b, m * x)) < epsilon)
         {

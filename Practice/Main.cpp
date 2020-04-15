@@ -42,27 +42,31 @@ void tests(const Matrix A, const Vector b, const Vector x)
     std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveHouseholder(A, b)));
     std::cout << std::endl;
 
-    std::cout << "LeastSquares:" << std::endl;
-    std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveLeastSquares(A, b)));
+    std::cout << "LeastSquares (GaussT):" << std::endl;
+    std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveLeastSquares(A, b, false)));
+    std::cout << std::endl;
+
+    std::cout << "LeastSquares (QR):" << std::endl;
+    std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveLeastSquares(A, b, true)));
     std::cout << std::endl;
 
     std::cout << "GMRES:" << std::endl;
     std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveGMRES(A, b, EPS)));
     std::cout << std::endl;
+
+
 }
 
 
 int main()
 {
     double arr[] = {
-        10, 1, 2,
-        1, 6, 3,
-        2, 3, 7
+            10, 1, 2,
+            1, 6, 3,
+            2, 3, 7
     };
-    Matrix A = Matrix::FromArray(
-        arr, 3, 3
-    );
-    Vector x = {1, 2, 3};
+    Matrix A = Matrix::GenerateMatrix(3, 9);
+    Vector x = {5, 4, 6};
     Vector b = A * x;
 
     tests(A, b, x);
