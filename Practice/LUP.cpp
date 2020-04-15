@@ -51,7 +51,7 @@ Vector SolveLUP(const Matrix& LU, P p, const Vector& b)
 
     for (int i = 0; i < n; ++i)
     {
-        bP[p.rows[i]] = b[i];
+        bP[i] = b[p.rows[i]];
     }
 
     const auto y = Utils::SolveLowerTriangle(SetOnes(LU), bP);

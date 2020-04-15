@@ -12,7 +12,7 @@
 #include "LeastSquares.h"
 #include "GMRES.h"
 
-constexpr double EPS = 0.00000001;
+constexpr double EPS = 0.00001;
 
 void tests(const Matrix A, const Vector b, const Vector x)
 {
@@ -60,13 +60,15 @@ void tests(const Matrix A, const Vector b, const Vector x)
 
 int main()
 {
+    int n = 256;
     double arr[] = {
             10, 1, 2,
             1, 6, 3,
             2, 3, 7
     };
-    Matrix A = Matrix::GenerateMatrix(3, 9);
-    Vector x = {5, 4, 6};
+    Matrix A = Matrix::GenerateMatrix(n, Matrix::variant);
+    Vector x(A.GetCols());
+    std::iota(x.begin(), x.end(), 1);
     Vector b = A * x;
 
     tests(A, b, x);

@@ -10,7 +10,7 @@ Vector SolveGMRES(Matrix m, Vector b, double epsilon)
     for (int i = 0; i < n; ++i)
     {
         auto K = Stack(k);
-        x = K * SolveLeastSquares(m * K, b, false);
+        x = K * SolveLeastSquares(m * K, b, true);
         k.push_back(m * k.back());
         if (Utils::EuclideanNorm(Utils::SubVectors(b, m * x)) < epsilon)
         {

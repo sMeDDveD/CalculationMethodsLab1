@@ -17,7 +17,7 @@ Vector SolveLeastSquares(Matrix m, Vector b, bool QR)
     }
 }
 
-
+    
 void GaussTransform(Matrix& m, Vector& b)
 {
     Matrix T = m.Transpose();
