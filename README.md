@@ -4,6 +4,6 @@
 - LUP decomposition
 - Cholesky decomposition
 - Successive over-relaxation
-- Housholder
+- Householder
 - Least squares problem
 - GMRES
