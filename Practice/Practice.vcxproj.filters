@@ -45,6 +45,9 @@
     <ClInclude Include="GMRES.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="ArnoldiGMRES.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Matrix.cpp">
@@ -78,6 +81,9 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="GMRES.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="ArnoldiGMRES.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
