@@ -22,7 +22,7 @@ Vector SolveRelaxation(const Matrix& m, const Vector& b, double epsilon, double 
         }
     }
     while (
-        Utils::EuclideanNorm(Utils::SubVectors(x, prev)) >= epsilon
+        Utils::EuclideanNorm(x - prev) >= epsilon
     );
 
     return x;

@@ -15,7 +15,8 @@
 #include "GMRES.h"
 #include "ArnoldiGMRES.h"
 
-constexpr double EPS = 0.01;
+constexpr double EPS = 0.00000000001;
+constexpr double W = 10.0 / 6;
 
 double timeit(Matrix A, Vector b, Vector x) {
     std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
@@ -55,7 +56,7 @@ std::pair<double, double> task3(Matrix A, Vector b, const Vector& x) {
     return {norm, t};
 }
 
-std::tuple<double, double, double> task4(Matrix A, Vector b, const Vector& x) {
+std::tuple<double, double, double> task4(Matrix A, const Vector& b, const Vector& x) {
     std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
     start = std::chrono::high_resolution_clock::now();
     auto [LU, P] = BuildLUP(std::move(A));
@@ -74,7 +75,7 @@ std::tuple<double, double, double> task4(Matrix A, Vector b, const Vector& x) {
     return {t1, t2, norm};
 }
 
-std::tuple<double, double, double> task5(Matrix A, Vector b, const Vector& x) {
+std::tuple<double, double, double> task5(Matrix A, const Vector& b, const Vector& x) {
     std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
     start = std::chrono::high_resolution_clock::now();
     auto [LT, D] = BuildCholesky(std::move(A));
@@ -91,6 +92,20 @@ std::tuple<double, double, double> task5(Matrix A, Vector b, const Vector& x) {
             (end - start).count();
 
     return {t1, t2, norm};
+}
+
+
+std::pair<double, double> task6(const Matrix& A, const Vector& b, const Vector& x) {
+    std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
+
+    start = std::chrono::high_resolution_clock::now();
+    auto norm = Utils::CubicNorm(x - SolveRelaxation(A, b, EPS, W));
+    end = std::chrono::high_resolution_clock::now();
+
+    auto t = std::chrono::duration_cast<std::chrono::milliseconds>
+            (end - start).count();
+
+    return {norm, t};
 }
 
 void cycle(int count = 100, int n = 256) {
@@ -119,6 +134,12 @@ void cycle(int count = 100, int n = 256) {
     minCholeskyN = std::numeric_limits<double>::max();
     maxCholeskyN = std::numeric_limits<double>::min();
     avgCholeskyN = 0;
+
+    double minRelaxationN, maxRelaxationN, avgRelaxationN;
+    double relaxationTime = 0;
+    minRelaxationN = std::numeric_limits<double>::max();
+    maxRelaxationN = std::numeric_limits<double>::min();
+    avgRelaxationN = 0;
 
     for (int i = 0; i < count; i++) {
         Matrix A = Matrix::GenerateMatrix(n, Matrix::variant);
@@ -152,6 +173,12 @@ void cycle(int count = 100, int n = 256) {
         buildTimeCholesky += t5Build;
         solveTimeCholesky += t5Solve;
 
+        auto [norm6, t6] = task6(A, b, x);
+        minRelaxationN = std::min(norm6, minRelaxationN);
+        maxRelaxationN = std::max(norm6, maxRelaxationN);
+        avgRelaxationN += norm6;
+        relaxationTime += t6;
+
     }
 
     std::cout << "T2 - Condition number: " << std::endl;
@@ -182,6 +209,13 @@ void cycle(int count = 100, int n = 256) {
     std::cout << "Avg norm: " << avgCholeskyN / count << std::endl;
     std::cout << "Avg time of build Cholesky: " << buildTimeCholesky / count << std::endl;
     std::cout << "Avg time of solve Cholesky: " << solveTimeCholesky / count << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "T6 - Relaxation: " << std::endl;
+    std::cout << "Min norm: " << minRelaxationN << std::endl;
+    std::cout << "Max norm: " << maxRelaxationN << std::endl;
+    std::cout << "Avg norm: " << avgRelaxationN / count << std::endl;
+    std::cout << "Avg time of Relaxation: " << relaxationTime / count << std::endl;
     std::cout << std::endl;
 
 
@@ -250,7 +284,7 @@ int main()
 
 	Matrix testMatrix = Matrix::FromArray(arr, 3, 3);
 
-	cycle(10, 100);
+	cycle(50, 256);
     //tests(A, b, x);
 	system("pause");
     return 0;
