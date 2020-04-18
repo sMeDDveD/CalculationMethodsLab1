@@ -8,6 +8,10 @@ Vector operator/(const Vector& l, double lambda);
 
 Vector operator*(double lambda, const Vector& l);
 
+Vector operator+(const Vector& l, const Vector& r);
+
+Vector operator-(const Vector& l, const Vector& r);
+
 namespace Utils
 {
     template <typename T>

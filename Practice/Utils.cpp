@@ -20,6 +20,32 @@ Vector operator*(double lambda, const Vector& l)
 	return l * lambda;
 }
 
+Vector operator+(const Vector& l, const Vector& r)
+{
+	const int n = l.size();
+
+	Vector x(n);
+	for (int i = 0; i < n; ++i)
+	{
+		x[i] = l[i] + r[i];
+	}
+
+	return x;
+}
+
+Vector operator-(const Vector& l, const Vector& r)
+{
+	const int n = l.size();
+
+	Vector x(n);
+	for (int i = 0; i < n; ++i)
+	{
+		x[i] = l[i] - r[i];
+	}
+
+	return x;
+}
+
 double Utils::CubicNorm(const Matrix& m)
 {
     double norm = 0;
@@ -51,17 +77,10 @@ double Utils::ScalarMultiply(const Vector& l, const Vector& r)
     return sum;
 }
 
+
 Vector Utils::SubVectors(const Vector& l, const Vector& r)
 {
-    const int n = l.size();
-
-    Vector x(n);
-    for (int i = 0; i < n; ++i)
-    {
-        x[i] = l[i] - r[i];
-    }
-
-    return x;
+	return l - r;
 }
 
 Vector Utils::SolveUpperTriangle(const Matrix& m, const Vector& b)

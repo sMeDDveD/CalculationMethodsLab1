@@ -13,7 +13,7 @@
 #include "GMRES.h"
 #include "ArnoldiGMRES.h"
 
-constexpr double EPS = 0.00001;
+constexpr double EPS = 0.0000001;
 
 void tests(const Matrix A, const Vector b, const Vector x)
 {
@@ -56,7 +56,7 @@ void tests(const Matrix A, const Vector b, const Vector x)
     std::cout << std::endl;
 
 	std::cout << "GMRES (Arnoldi)" << std::endl;
-    std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveArnoldiGMRES(A, b, EPS)));
+    std::cout << Utils::EuclideanNorm(x - SolveArnoldiGMRES(A, b, EPS));
 	std::cout << std::endl;
 
 

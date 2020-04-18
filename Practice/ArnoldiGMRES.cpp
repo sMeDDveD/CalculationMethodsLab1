@@ -53,7 +53,7 @@ Vector SolveArnoldiGMRES(Matrix m, Vector b, double epsilon)
 		auto y = SolveLeastSquares(HessenbergStack(H, j + 1), d, true);
 		x = Stack(Q) * y;
 
-        if (Utils::EuclideanNorm(Utils::SubVectors(b, m * x)) < epsilon)
+        if (Utils::EuclideanNorm(b - m * x) < epsilon)
         {
 			return x;
         }
