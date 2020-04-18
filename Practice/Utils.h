@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include <algorithm>
+
 #include "Matrix.h"
 
 Vector operator*(const Vector& l, double lambda);
@@ -23,6 +25,8 @@ namespace Utils
     double CubicNorm(const Matrix& m);
 
     double EuclideanNorm(const Vector& v);
+
+    double CubicNorm(const Vector& v);
 
     double ScalarMultiply(const Vector& l, const Vector& r);
 

@@ -139,3 +139,12 @@ std::pair<int, int> Utils::FindMax(const Matrix& m, int start)
     }
     return indexes;
 }
+
+double Utils::CubicNorm(const Vector &v)
+{
+    double m = v[0];
+    for (const auto& now : v) {
+        m = std::max(std::abs(now), m);
+    }
+    return m;
+}
