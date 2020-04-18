@@ -1,5 +1,25 @@
 #include "Utils.h"
 
+Vector operator*(const Vector& l, double lambda)
+{
+	Vector r = l;
+	for (auto& now : r)
+	{
+		now *= lambda;
+	}
+	return r;
+}
+
+Vector operator/(const Vector& l, double lambda)
+{
+	return l * (1 / lambda);
+}
+
+Vector operator*(double lambda, const Vector& l)
+{
+	return l * lambda;
+}
+
 double Utils::CubicNorm(const Matrix& m)
 {
     double norm = 0;

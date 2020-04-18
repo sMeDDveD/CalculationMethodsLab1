@@ -11,6 +11,7 @@
 #include "Householder.h"
 #include "LeastSquares.h"
 #include "GMRES.h"
+#include "ArnoldiGMRES.h"
 
 constexpr double EPS = 0.00001;
 
@@ -54,6 +55,10 @@ void tests(const Matrix A, const Vector b, const Vector x)
     std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveGMRES(A, b, EPS)));
     std::cout << std::endl;
 
+	std::cout << "GMRES (Arnoldi)" << std::endl;
+    std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveArnoldiGMRES(A, b, EPS)));
+	std::cout << std::endl;
+
 
 }
 
@@ -62,15 +67,18 @@ int main()
 {
     int n = 256;
     double arr[] = {
-            10, 1, 2,
-            1, 6, 3,
-            2, 3, 7
+			5,  10,   3,
+            -10,  15, - 4,
+              5,   8,  16
     };
     Matrix A = Matrix::GenerateMatrix(n, Matrix::variant);
     Vector x(A.GetCols());
     std::iota(x.begin(), x.end(), 1);
     Vector b = A * x;
 
+	Matrix testMatrix = Matrix::FromArray(arr, 3, 3);
+
     tests(A, b, x);
+	system("pause");
     return 0;
 }

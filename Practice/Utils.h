@@ -2,6 +2,12 @@
 
 #include "Matrix.h"
 
+Vector operator*(const Vector& l, double lambda);
+
+Vector operator/(const Vector& l, double lambda);
+
+Vector operator*(double lambda, const Vector& l);
+
 namespace Utils
 {
     template <typename T>

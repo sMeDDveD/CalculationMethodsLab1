@@ -56,7 +56,7 @@ Vector SolveHouseholder(Matrix m, Vector b)
 {
     const int n = m.GetCols();
     const int l = m.GetRows();
-    for (int i = 0; i < n - 1; ++i)
+    for (int i = 0; i < n; ++i)
     {
         ApplyToMatrix(m, b, GetW(m.GetColPart(i, i, l)));
     }
