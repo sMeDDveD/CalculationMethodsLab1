@@ -13,17 +13,13 @@ Vector SolveRelaxation(const Matrix& m, const Vector& b, double epsilon, double 
             double sum = 0;
             for (int j = 0; j < n; j++)
             {
-                if (i != j)
-                {
                     sum += m(i, j) * x[j];
-                }
             }
-            x[i] = (1 - w) * x[i] + w * (b[i] - sum) / m(i, i);
+            x[i] = (1 - w) * x[i] + w * (b[i] - sum + m(i, i) * x[i]) / m(i, i);
         }
     }
     while (
         Utils::EuclideanNorm(x - prev) >= epsilon
     );
-
     return x;
 }
