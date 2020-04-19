@@ -2,6 +2,7 @@
 #include <functional>
 #include <chrono>
 #include <utility>
+#include <fstream>
 
 #include "ConditionNumber.h"
 #include "Matrix.h"
@@ -15,8 +16,20 @@
 #include "GMRES.h"
 #include "ArnoldiGMRES.h"
 
-constexpr double EPS = 0.000001;
+constexpr double EPS = 0.00000001;
 constexpr double W = 10.0 / 6;
+
+template < class T >
+std::ostream& operator << (std::ostream& os, const std::vector<T>& v)
+{
+	os << "x = (";
+	for (auto ii = v.begin(); ii != v.end() - 1; ++ii)
+	{
+		os << *ii << ", ";
+	}
+	os << v.back() << ")";
+	return os;
+}
 
 std::pair<double, double> task2(Matrix A) {
     auto c = GetConditionNumber(A);
@@ -157,8 +170,9 @@ std::pair<double, double> task10(Matrix A, Vector b, const Vector &x)
     return {norm, t};
 }
 
-Matrix cycle(int count = 100, int n = 256)
+Matrix cycle(int count = 100, int n = 256, const std::string& out = "reports\\report.txt")
 {
+	std::ofstream fout(out);
     Matrix maxMatrix(n);
 
     double minCond, maxCond, avgCond;
@@ -228,7 +242,7 @@ Matrix cycle(int count = 100, int n = 256)
         if (condition > maxCond)
         {
             maxCond = condition;
-            // maxMatrix = A;
+            maxMatrix = A;
         }
         avgCond += condition;
         invTime += t2;
@@ -285,73 +299,75 @@ Matrix cycle(int count = 100, int n = 256)
 
     }
 
-    std::cout << "T2 - Condition number: " << std::endl;
-    std::cout << "Min number of condition: " << minCond << std::endl;
-    std::cout << "Max number of condition: " << maxCond << std::endl;
-    std::cout << "Avg number of condition: " << avgCond / count << std::endl;
-    std::cout << "Avg time of inverse: " << invTime / count << std::endl;
-    std::cout << std::endl;
+	fout << "T2 - Condition number: " << std::endl;
+	fout << "Min number of condition: " << minCond << std::endl;
+	fout << "Max number of condition: " << maxCond << std::endl;
+	fout << "Avg number of condition: " << avgCond / count << std::endl;
+	fout << "Avg time of inverse: " << invTime / count << std::endl;
+	fout << std::endl;
 
-    std::cout << "T3 - Gauss: " << std::endl;
-    std::cout << "Min norm: " << minGaussN << std::endl;
-    std::cout << "Max norm: " << maxGaussN << std::endl;
-    std::cout << "Avg norm: " << avgGaussN / count << std::endl;
-    std::cout << "Avg time of Gauss: " << gaussTime / count << std::endl;
-    std::cout << std::endl;
+	fout << "T3 - Gauss: " << std::endl;
+	fout << "Min norm: " << minGaussN << std::endl;
+	fout << "Max norm: " << maxGaussN << std::endl;
+	fout << "Avg norm: " << avgGaussN / count << std::endl;
+	fout << "Avg time of Gauss: " << gaussTime / count << std::endl;
+	fout << std::endl;
 
-    std::cout << "T4 - LUP: " << std::endl;
-    std::cout << "Min norm: " << minLUPN << std::endl;
-    std::cout << "Max norm: " << maxLUPN << std::endl;
-    std::cout << "Avg norm: " << avgLUPN / count << std::endl;
-    std::cout << "Avg time of build LUP: " << buildTimeLUP / count << std::endl;
-    std::cout << "Avg time of solve LUP: " << solveTimeLUP / count << std::endl;
-    std::cout << std::endl;
+	fout << "T4 - LUP: " << std::endl;
+	fout << "Min norm: " << minLUPN << std::endl;
+	fout << "Max norm: " << maxLUPN << std::endl;
+	fout << "Avg norm: " << avgLUPN / count << std::endl;
+	fout << "Avg time of build LUP: " << buildTimeLUP / count << std::endl;
+	fout << "Avg time of solve LUP: " << solveTimeLUP / count << std::endl;
+	fout << std::endl;
 
-    std::cout << "T5 - Cholesky: " << std::endl;
-    std::cout << "Min norm: " << minCholeskyN << std::endl;
-    std::cout << "Max norm: " << maxCholeskyN << std::endl;
-    std::cout << "Avg norm: " << avgCholeskyN / count << std::endl;
-    std::cout << "Avg time of build Cholesky: " << buildTimeCholesky / count << std::endl;
-    std::cout << "Avg time of solve Cholesky: " << solveTimeCholesky / count << std::endl;
-    std::cout << std::endl;
+	fout << "T5 - Cholesky: " << std::endl;
+	fout << "Min norm: " << minCholeskyN << std::endl;
+	fout << "Max norm: " << maxCholeskyN << std::endl;
+	fout << "Avg norm: " << avgCholeskyN / count << std::endl;
+	fout << "Avg time of build Cholesky: " << buildTimeCholesky / count << std::endl;
+	fout << "Avg time of solve Cholesky: " << solveTimeCholesky / count << std::endl;
+	fout << std::endl;
 
-    std::cout << "T6 - Relaxation: " << std::endl;
-    std::cout << "Min norm: " << minRelaxationN << std::endl;
-    std::cout << "Max norm: " << maxRelaxationN << std::endl;
-    std::cout << "Avg norm: " << avgRelaxationN / count << std::endl;
-    std::cout << "Avg time of Relaxation: " << relaxationTime / count << std::endl;
-    std::cout << std::endl;
+	fout << "T6 - Relaxation: " << std::endl;
+	fout << "Min norm: " << minRelaxationN << std::endl;
+	fout << "Max norm: " << maxRelaxationN << std::endl;
+	fout << "Avg norm: " << avgRelaxationN / count << std::endl;
+	fout << "Avg time of Relaxation: " << relaxationTime / count << std::endl;
+	fout << std::endl;
 
-    std::cout << "T7 - Householder: " << std::endl;
-    std::cout << "Min norm: " << minHouseHolderN << std::endl;
-    std::cout << "Max norm: " << maxHouseHolderN << std::endl;
-    std::cout << "Avg norm: " << avgHouseHolderN / count << std::endl;
-    std::cout << "Avg time of Householder: " << houseHolderTime / count << std::endl;
-    std::cout << std::endl;
+	fout << "T7 - Householder: " << std::endl;
+	fout << "Min norm: " << minHouseHolderN << std::endl;
+	fout << "Max norm: " << maxHouseHolderN << std::endl;
+	fout << "Avg norm: " << avgHouseHolderN / count << std::endl;
+	fout << "Avg time of Householder: " << houseHolderTime / count << std::endl;
+	fout << std::endl;
 
-    std::cout << "T8 - LeastSquares (QR): " << std::endl;
-    std::cout << "Min norm: " << minLeastSquaresN << std::endl;
-    std::cout << "Max norm: " << maxLeastSquaresN << std::endl;
-    std::cout << "Avg norm: " << avgLeastSquaresN / count << std::endl;
-    std::cout << "Avg time of LeastSquares: " << LeastSquaresTime / count << std::endl;
-    std::cout << std::endl;
+	fout << "T8 - LeastSquares (QR): " << std::endl;
+	fout << "Min norm: " << minLeastSquaresN << std::endl;
+	fout << "Max norm: " << maxLeastSquaresN << std::endl;
+	fout << "Avg norm: " << avgLeastSquaresN / count << std::endl;
+	fout << "Avg time of LeastSquares: " << LeastSquaresTime / count << std::endl;
+	fout << std::endl;
 
-    std::cout << "T9 - GMRES: " << std::endl;
-    std::cout << "Min norm: " << minGMRESN << std::endl;
-    std::cout << "Max norm: " << maxGMRESN << std::endl;
-    std::cout << "Avg norm: " << avgGMRESN / count << std::endl;
-    std::cout << "Avg time of GMRES: " << timeGMRES / count << std::endl;
-    std::cout << std::endl;
+	fout << "T9 - GMRES: " << std::endl;
+	fout << "Min norm: " << minGMRESN << std::endl;
+	fout << "Max norm: " << maxGMRESN << std::endl;
+	fout << "Avg norm: " << avgGMRESN / count << std::endl;
+	fout << "Avg time of GMRES: " << timeGMRES / count << std::endl;
+	fout << std::endl;
 
-    std::cout << "T10 - GMRES (Arnoldi): " << std::endl;
-    std::cout << "Min norm: " << minArnoldiGMRESN << std::endl;
-    std::cout << "Max norm: " << maxArnoldiGMRESN << std::endl;
-    std::cout << "Avg norm: " << avgArnoldiGMRESN / count << std::endl;
-    std::cout << "Avg time of GMRES (Arnoldi): " << timeArnoldiGMRES / count << std::endl;
-    std::cout << std::endl;
+	fout << "T10 - GMRES (Arnoldi): " << std::endl;
+	fout << "Min norm: " << minArnoldiGMRESN << std::endl;
+	fout << "Max norm: " << maxArnoldiGMRESN << std::endl;
+	fout << "Avg norm: " << avgArnoldiGMRESN / count << std::endl;
+	fout << "Avg time of GMRES (Arnoldi): " << timeArnoldiGMRES / count << std::endl;
+	fout << std::endl;
 
     return maxMatrix;
 }
+
+
 
 void tests(const Matrix& A, const Vector& b, const Vector& x)
 {
@@ -360,41 +376,37 @@ void tests(const Matrix& A, const Vector& b, const Vector& x)
     std::cout << std::endl;
 
     std::cout << "Gauss: " << std::endl;
-    std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveGauss(A, b)));
+    std::cout << SolveGauss(A, b);
     std::cout << std::endl;
 
     std::cout << "LUP: " << std::endl;
     auto [LU, P] = BuildLUP(A);
-    std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveLUP(LU, P, b)));
+    std::cout << SolveLUP(LU, P, b);
     std::cout << std::endl;
 
     std::cout << "Cholesky:" << std::endl;
     auto [LT, D] = BuildCholesky(A);
-    std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveCholesky(LT, D, b)));
+    std::cout <<  SolveCholesky(LT, D, b);
     std::cout << std::endl;
 
     std::cout << "Relaxation:" << std::endl;
-    std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveRelaxation(A, b, EPS, 1.2)));
+    std::cout << SolveRelaxation(A, b, EPS, W);
     std::cout << std::endl;
 
     std::cout << "Householder:" << std::endl;
-    std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveHouseholder(A, b)));
-    std::cout << std::endl;
-
-    std::cout << "LeastSquares (GaussT):" << std::endl;
-    std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveLeastSquares(A, b, false)));
+    std::cout << SolveHouseholder(A, b);
     std::cout << std::endl;
 
     std::cout << "LeastSquares (QR):" << std::endl;
-    std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveLeastSquares(A, b, true)));
+    std::cout << SolveLeastSquares(A, b, true);
     std::cout << std::endl;
 
     std::cout << "GMRES:" << std::endl;
-    std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveGMRES(A, b, EPS)));
+    std::cout << SolveGMRES(A, b, EPS);
     std::cout << std::endl;
 
 	std::cout << "GMRES (Arnoldi)" << std::endl;
-    std::cout << Utils::EuclideanNorm(Utils::SubVectors(x, SolveArnoldiGMRES(A, b, EPS)));
+    std::cout <<  SolveArnoldiGMRES(A, b, EPS);
 	std::cout << std::endl;
 
 
@@ -405,17 +417,15 @@ int main()
 {
     int n = 256;
     double arr[] = {
-            5, 10, 3,
-            -10, 15, -4,
-            5, 8, 16
+            7, 1, 2, 3,
+            1, 15, 3, 6,
+            2, 3, 16, 8,
+            3, 6, 8, 20,
     };
-    Matrix A = Matrix::GenerateMatrix(n, Matrix::variant);
-    Vector x(A.GetCols());
-    std::iota(x.begin(), x.end(), 1);
+	Matrix A = Matrix::FromArray(arr, 4, 4);
+    Vector x = {1, 2, 3, 4};
     Vector b = A * x;
 
-    Matrix testMatrix = Matrix::FromArray(arr, 3, 3);
-
-    cycle(100, 256);
+	tests(A, b, x);
     return 0;
 }

@@ -1,5 +1,7 @@
 #include "Relaxation.h"
 
+#include <iostream>
+
 Vector SolveRelaxation(const Matrix& m, const Vector& b, double epsilon, double w)
 {
     const int n = b.size();

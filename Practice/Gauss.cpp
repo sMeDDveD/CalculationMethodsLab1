@@ -26,7 +26,7 @@ Vector SolveGauss(Matrix m, Vector b)
         for (int i = k + 1; i < n; ++i)
         {
             const double l = -m(i, k) / m(k, k);
-            m.AddMultipliedRow(i, k, l);
+            m.AddMultipliedRowPart(i, k, l, k + 1, n);
             b[i] += l * b[k];
         }
     }
