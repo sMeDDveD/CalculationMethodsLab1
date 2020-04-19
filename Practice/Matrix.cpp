@@ -107,8 +107,6 @@ double* Matrix::GetData() const
 
 double& Matrix::operator()(int i, int j)
 {
-    if (i >= rows || j >= cols)
-        throw std::runtime_error("Matrix subscript out of bounds");
     return data[i * cols + j];
 }
 
@@ -274,8 +272,6 @@ Matrix Matrix::GenerateMatrix(int n, int param)
 
 double Matrix::operator()(int i, int j) const
 {
-    if (i >= rows || j >= cols)
-        throw std::runtime_error("Matrix subscript out of bounds");
     return data[i * cols + j];
 }
 

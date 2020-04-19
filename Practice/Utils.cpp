@@ -143,8 +143,27 @@ std::pair<int, int> Utils::FindMax(const Matrix& m, int start)
 double Utils::CubicNorm(const Vector &v)
 {
     double m = v[0];
-    for (const auto& now : v) {
+    for (const auto &now : v)
+    {
         m = std::max(std::abs(now), m);
     }
     return m;
+}
+
+Vector Utils::GenerateVector(int length, int n)
+{
+    std::random_device device;
+    std::uniform_real_distribution<double> distr(
+            -pow(2, static_cast<double>(n) / 4),
+            pow(2, static_cast<double>(n) / 4)
+    );
+
+    Vector v(length);
+
+    for (auto &now : v)
+    {
+        now = distr(device);
+    }
+
+    return v;
 }

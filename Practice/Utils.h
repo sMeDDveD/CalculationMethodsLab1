@@ -22,19 +22,21 @@ namespace Utils
         return (T(0) < val) - (val < T(0));
     }
 
-    double CubicNorm(const Matrix& m);
+    double CubicNorm(const Matrix &m);
 
-    double EuclideanNorm(const Vector& v);
+    double EuclideanNorm(const Vector &v);
 
-    double CubicNorm(const Vector& v);
+    double CubicNorm(const Vector &v);
 
-    double ScalarMultiply(const Vector& l, const Vector& r);
+    double ScalarMultiply(const Vector &l, const Vector &r);
 
-    Vector SubVectors(const Vector& l, const Vector& r);
+    Vector GenerateVector(int length, int n);
 
-    Vector SolveUpperTriangle(const Matrix& m, const Vector& b);
+    Vector SubVectors(const Vector &l, const Vector &r);
 
-    Vector SolveLowerTriangle(const Matrix& m, const Vector& b);
+    Vector SolveUpperTriangle(const Matrix &m, const Vector &b);
 
-    std::pair<int, int> FindMax(const Matrix& m, int start);
+    Vector SolveLowerTriangle(const Matrix &m, const Vector &b);
+
+    std::pair<int, int> FindMax(const Matrix &m, int start);
 }

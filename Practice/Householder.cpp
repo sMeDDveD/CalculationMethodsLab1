@@ -61,6 +61,5 @@ Vector SolveHouseholder(Matrix m, Vector b)
         ApplyToMatrix(m, b, GetW(m.GetColPart(i, i, l)));
     }
 
-
     return Utils::SolveUpperTriangle(m, b);
 }

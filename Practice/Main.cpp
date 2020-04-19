@@ -18,16 +18,6 @@
 constexpr double EPS = 0.000001;
 constexpr double W = 10.0 / 6;
 
-double timeit(Matrix A, Vector b, Vector x) {
-    std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
-
-    start = std::chrono::high_resolution_clock::now();
-    std::cout << Utils::EuclideanNorm(x - SolveGauss(std::move(A), std::move(b)))
-    << std::endl;
-    end = std::chrono::high_resolution_clock::now();
-    return 0;
-}
-
 std::pair<double, double> task2(Matrix A) {
     auto c = GetConditionNumber(A);
 
@@ -126,11 +116,11 @@ std::pair<double, double> task8(Matrix A, Vector b, const Vector &x)
 {
     std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
 
-    auto copyA = A;
-    auto copyB = b;
+    auto copyA(A);
+    auto copyB(b);
 
     start = std::chrono::high_resolution_clock::now();
-    auto norm = Utils::CubicNorm(copyA * SolveLeastSquares(std::move(A), std::move(b), true) - copyB);
+    auto norm = Utils::EuclideanNorm(copyA * SolveLeastSquares(std::move(A), std::move(b), true) - copyB);
     end = std::chrono::high_resolution_clock::now();
 
     auto t = std::chrono::duration_cast<std::chrono::milliseconds>
@@ -167,8 +157,10 @@ std::pair<double, double> task10(Matrix A, Vector b, const Vector &x)
     return {norm, t};
 }
 
-void cycle(int count = 100, int n = 256)
+Matrix cycle(int count = 100, int n = 256)
 {
+    Matrix maxMatrix(n);
+
     double minCond, maxCond, avgCond;
     double invTime = 0;
     minCond = std::numeric_limits<double>::max();
@@ -228,23 +220,26 @@ void cycle(int count = 100, int n = 256)
     for (int i = 0; i < count; i++)
     {
         Matrix A = Matrix::GenerateMatrix(n, Matrix::variant);
-        Vector x(n);
-        std::iota(x.begin(), x.end(), 1);
+        Vector x = Utils::GenerateVector(n, Matrix::variant);
         Vector b = A * x;
 
         auto[condition, t2] = task2(A);
         minCond = std::min(condition, minCond);
-        maxCond = std::max(condition, maxCond);
+        if (condition > maxCond)
+        {
+            maxCond = condition;
+            // maxMatrix = A;
+        }
         avgCond += condition;
         invTime += t2;
 
-        auto [norm3, t3] = task3(A, b, x);
+        auto[norm3, t3] = task3(A, b, x);
         minGaussN = std::min(norm3, minGaussN);
         maxGaussN = std::max(norm3, maxGaussN);
         avgGaussN += norm3;
         gaussTime += t3;
 
-        auto [t4Build, t4Solve, norm4] = task4(A, b, x);
+        auto[t4Build, t4Solve, norm4] = task4(A, b, x);
         minLUPN = std::min(norm4, minLUPN);
         maxLUPN = std::max(norm4, maxLUPN);
         avgLUPN += norm4;
@@ -270,7 +265,7 @@ void cycle(int count = 100, int n = 256)
         avgHouseHolderN += norm7;
         houseHolderTime += t7;
 
-        auto[norm8, t8] = task8(A.GetSubMatrix(n, n / 2), b, x);
+        auto[norm8, t8] = task8(A.GetSubMatrix(n, 20 * Matrix::variant), b, x);
         minLeastSquaresN = std::min(norm8, minLeastSquaresN);
         maxLeastSquaresN = std::max(norm8, maxLeastSquaresN);
         avgLeastSquaresN += norm8;
@@ -355,7 +350,7 @@ void cycle(int count = 100, int n = 256)
     std::cout << "Avg time of GMRES (Arnoldi): " << timeArnoldiGMRES / count << std::endl;
     std::cout << std::endl;
 
-
+    return maxMatrix;
 }
 
 void tests(const Matrix& A, const Vector& b, const Vector& x)
@@ -421,8 +416,6 @@ int main()
 
     Matrix testMatrix = Matrix::FromArray(arr, 3, 3);
 
-    cycle(10, 100);
-    //tests(A, b, x);
-    system("pause");
+    cycle(100, 256);
     return 0;
 }
