@@ -1,0 +1,56 @@
+T2 - Condition number: 
+Min number of condition: 4.57967
+Max number of condition: 4.93768
+Avg number of condition: 4.71421
+Avg time of inverse: 114.19
+
+T3 - Gauss: 
+Min norm: 7.99361e-15
+Max norm: 2.22045e-14
+Avg norm: 1.26565e-14
+Avg time of Gauss: 26.21
+
+T4 - LUP: 
+Min norm: 6.21725e-15
+Max norm: 1.86517e-14
+Avg norm: 1.02141e-14
+Avg time of build LUP: 26.46
+Avg time of solve LUP: 0
+
+T5 - Cholesky: 
+Min norm: 6.21725e-15
+Max norm: 1.5099e-14
+Avg norm: 9.53904e-15
+Avg time of build Cholesky: 9.14
+Avg time of solve Cholesky: 0
+
+T6 - Relaxation: 
+Min norm: 4.99104e-10
+Max norm: 9.64874e-10
+Avg norm: 6.50484e-10
+Avg time of Relaxation: 8.17
+
+T7 - Householder: 
+Min norm: 1.64313e-14
+Max norm: 3.90799e-14
+Avg norm: 2.39364e-14
+Avg time of Householder: 45.79
+
+T8 - LeastSquares (QR): 
+Min norm: 12413.9
+Max norm: 16156.6
+Avg norm: 14284.4
+Avg time of LeastSquares: 19.96
+
+T9 - GMRES: 
+Min norm: 1.81632e-12
+Max norm: 6.39577e-12
+Avg norm: 3.65489e-12
+Avg time of GMRES: 16.61
+
+T10 - GMRES (Arnoldi): 
+Min norm: 4.47198e-13
+Max norm: 2.15206e-12
+Avg norm: 8.57824e-13
+Avg time of GMRES (Arnoldi): 3.32
+
