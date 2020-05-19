@@ -3,29 +3,29 @@ project(CalculationMethods)
 
 set(CMAKE_CXX_STANDARD 20)
 
-include_directories(Practice)
+include_directories(Sources)
 
 add_executable(CalculationMethods
-        Practice/Cholesky.cpp
-        Practice/Cholesky.h
-        Practice/ConditionNumber.cpp
-        Practice/ConditionNumber.h
-        Practice/Gauss.cpp
-        Practice/Gauss.h
-        Practice/Householder.cpp
-        Practice/Householder.h
-        Practice/LeastSquares.cpp
-        Practice/LeastSquares.h
-        Practice/LUP.cpp
-        Practice/LUP.h
-        Practice/Main.cpp
-        Practice/Matrix.cpp
-        Practice/Matrix.h
-        Practice/Relaxation.cpp
-        Practice/Relaxation.h
-        Practice/Utils.cpp
-        Practice/Utils.h
-        Practice/GMRES.h
-        Practice/GMRES.cpp
-        Practice/ArnoldiGMRES.h
-        Practice/ArnoldiGMRES.cpp)
+        Sources/Cholesky.cpp
+        Sources/Cholesky.h
+        Sources/ConditionNumber.cpp
+        Sources/ConditionNumber.h
+        Sources/Gauss.cpp
+        Sources/Gauss.h
+        Sources/Householder.cpp
+        Sources/Householder.h
+        Sources/LeastSquares.cpp
+        Sources/LeastSquares.h
+        Sources/LUP.cpp
+        Sources/LUP.h
+        Sources/Main.cpp
+        Sources/Matrix.cpp
+        Sources/Matrix.h
+        Sources/Relaxation.cpp
+        Sources/Relaxation.h
+        Sources/Utils.cpp
+        Sources/Utils.h
+        Sources/GMRES.h
+        Sources/GMRES.cpp
+        Sources/ArnoldiGMRES.h
+        Sources/ArnoldiGMRES.cpp)
